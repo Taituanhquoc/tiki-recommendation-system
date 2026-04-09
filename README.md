@@ -33,6 +33,9 @@ The recommendation model is built using **SVD (Singular Value Decomposition)** f
 ## Result
 The system predicts user preferences and recommends relevant products based on historical rating behavior.
 
+## Visualization
+The recommendation results were exported to JSON format and displayed through a simple HTML interface for better visualization.
+
 ## Project Output
 - Cleaned review and product datasets
 - Exploratory data analysis visualizations
