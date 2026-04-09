@@ -53,6 +53,7 @@ These datasets contain product information and user ratings used to generate rec
 The recommendation results were:
 - Exported to **JSON format**  
 - Displayed using a simple **HTML interface** for better visualization  
+<img width="398" height="852" alt="image" src="https://github.com/user-attachments/assets/b6a572fd-8b50-4e89-a4eb-061d67fa3750" />
 
 ---
 
