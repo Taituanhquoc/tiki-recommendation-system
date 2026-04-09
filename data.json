@@ -1,0 +1,30 @@
+{
+    "user_id": 29754430,
+    "recommendations": [
+        {
+            "product_id": 276110349,
+            "product_name": "Apple iPhone 16",
+            "predicted_rating": 5.0
+        },
+        {
+            "product_id": 4048043,
+            "product_name": "Điện Thoại Bàn Panasonic KX-TS500",
+            "predicted_rating": 5.0
+        },
+        {
+            "product_id": 271234577,
+            "product_name": "Điện Thoại Nokia 105 4G Pro - Hàng Chính Hãng",
+            "predicted_rating": 5.0
+        },
+        {
+            "product_id": 181928208,
+            "product_name": "Điện thoại bàn Panasonic KX-TGC310 hàng chính hãng",
+            "predicted_rating": 5.0
+        },
+        {
+            "product_id": 278967562,
+            "product_name": "Monster - Deluxe Edition –  [Chọn Tập Lẻ",
+            "predicted_rating": 5.0
+        }
+    ]
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiki Mobile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="notch"></div>
+  <div class="screen">
+
+    <!-- ══════════ HOME PAGE ══════════ -->
+    <div class="page active" id="page-home">
+
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●● WiFi 100%</span>
+      </div>
+
+      <div class="header">
+        <div class="search-bar" onclick="openSearch()">
+          <span class="search-icon">🔍</span>
+          <span class="placeholder">Tìm sản phẩm, thương hiệu...</span>
+          <span style="font-size:14px;color:var(--tiki-blue);">🎁</span>
+        </div>
+        <div class="header-row">
+          <div class="header-tags">
+            <span class="header-tag">🚚 Miễn phí ship</span>
+            <span class="header-tag">⚡ Flash Sale</span>
+          </div>
+          <div class="header-actions">
+            <div class="icon-btn" onclick="goPage('cart')">
+              🛒<div class="badge cart-badge">0</div>
+            </div>
+            <div class="icon-btn">🔔</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-tabs">
+        <div class="nav-tab active">Trang chủ</div>
+        <div class="nav-tab">Khuyến mãi</div>
+        <div class="nav-tab">Tiki Trading</div>
+        <div class="nav-tab">Đơn hàng</div>
+      </div>
+
+      <div class="scroll-area">
+
+        <!-- Banner -->
+        <div class="banner">
+          <h3>⚡ Flash Sale hôm nay</h3>
+          <p>Giảm đến 70% — Chỉ còn 02:34:15</p>
+          <button class="banner-btn">Mua ngay</button>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+          <div class="cat-item" onclick="fillSearch('Điện thoại');openSearch();">
+            <span class="cat-icon">📱</span>Điện thoại
+          </div>
+          <div class="cat-item" onclick="fillSearch('Laptop');openSearch();">
+            <span class="cat-icon">💻</span>Laptop
+          </div>
+          <div class="cat-item" onclick="fillSearch('Tai nghe');openSearch();">
+            <span class="cat-icon">🎧</span>Tai nghe
+          </div>
+          <div class="cat-item" onclick="fillSearch('Thời trang');openSearch();">
+            <span class="cat-icon">👗</span>Thời trang
+          </div>
+          <div class="cat-item" onclick="fillSearch('Sách');openSearch();">
+            <span class="cat-icon">📚</span>Sách
+          </div>
+          <div class="cat-item" onclick="fillSearch('Nhà cửa');openSearch();">
+            <span class="cat-icon">🏠</span>Nhà cửa
+          </div>
+          <div class="cat-item" onclick="fillSearch('Gaming');openSearch();">
+            <span class="cat-icon">🎮</span>Đồ chơi
+          </div>
+          <div class="cat-item" onclick="openSearch();">
+            <span class="cat-icon">⋯</span>Xem thêm
+          </div>
+        </div>
+
+        <!-- Recommendation Banner -->
+        <div class="reco-banner" id="reco-banner">
+          <div class="reco-banner-icon">🤖</div>
+          <div class="reco-banner-text">
+            <h4>Đang tải gợi ý...</h4>
+            <p>Vui lòng chờ</p>
+          </div>
+        </div>
+
+        <!-- Recommended Section (from data.json) -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title">🤖 Gợi ý dành cho bạn</span>
+            <span class="section-more">Xem tất cả ›</span>
+          </div>
+          <div class="products-row" id="recommended-row">
+            <!-- Filled by app.js -->
+          </div>
+        </div>
+
+        <!-- Flash Sale Section -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title">⚡ Flash Sale — kết thúc sau 02:34</span>
+            <span class="section-more">Xem tất cả ›</span>
+          </div>
+          <div class="products-row" id="flashsale-row">
+            <!-- Filled by app.js -->
+          </div>
+        </div>
+
+        <div style="height:20px;"></div>
+      </div><!-- /scroll-area -->
+
+      <div class="bottom-nav">
+        <div class="bnav-item active">
+          <div class="bnav-icon">🏠</div>
+          <div class="bnav-label">Trang chủ</div>
+        </div>
+        <div class="bnav-item" onclick="openSearch()">
+          <div class="bnav-icon">🔍</div>
+          <div class="bnav-label">Tìm kiếm</div>
+        </div>
+        <div class="bnav-item" onclick="goPage('cart')">
+          <div class="bnav-icon">🛒</div>
+          <div class="bnav-label">Giỏ hàng</div>
+        </div>
+        <div class="bnav-item">
+          <div class="bnav-icon">❤️</div>
+          <div class="bnav-label">Yêu thích</div>
+        </div>
+        <div class="bnav-item">
+          <div class="bnav-icon">👤</div>
+          <div class="bnav-label">Tài khoản</div>
+        </div>
+      </div>
+    </div>
+    <!-- /page-home -->
+
+
+    <!-- ══════════ SEARCH OVERLAY ══════════ -->
+    <div class="search-overlay" id="search-overlay">
+      <div class="search-header">
+        <button class="search-back" onclick="closeSearch()">←</button>
+        <input
+          class="search-input-box"
+          id="search-input"
+          placeholder="Tìm sản phẩm..."
+          oninput="onSearch(this.value)"
+          autocomplete="off"
+        />
+        <button class="search-cancel" onclick="closeSearch()">Hủy</button>
+      </div>
+
+      <div class="search-body">
+
+        <!-- Hot section (shown when input is empty) -->
+        <div id="hot-section">
+          <div class="hot-section">
+            <div class="hot-title">🔥 Tìm kiếm phổ biến</div>
+            <div class="hot-tags">
+              <span class="hot-tag" onclick="fillSearch('iPhone 16')">iPhone 16</span>
+              <span class="hot-tag" onclick="fillSearch('Laptop gaming')">Laptop gaming</span>
+              <span class="hot-tag" onclick="fillSearch('Tai nghe')">Tai nghe</span>
+              <span class="hot-tag" onclick="fillSearch('Nokia')">Nokia</span>
+              <span class="hot-tag" onclick="fillSearch('Panasonic')">Panasonic</span>
+              <span class="hot-tag" onclick="fillSearch('Manga')">Manga</span>
+              <span class="hot-tag" onclick="fillSearch('Loa bluetooth')">Loa bluetooth</span>
+              <span class="hot-tag" onclick="fillSearch('Điện thoại bàn')">Điện thoại bàn</span>
+            </div>
+          </div>
+
+          <div class="hot-section" style="padding-top:0;">
+            <div class="hot-title">🕐 Tìm kiếm gần đây</div>
+            <div id="recent-searches">
+              <div style="font-size:12px;color:#aaa;">Chưa có tìm kiếm nào</div>
+            </div>
+          </div>
+
+          <div class="hot-section" style="padding-top:0;">
+            <div class="ai-label">🤖 Gợi ý thông minh</div>
+            <div class="ai-cards">
+              <div class="ai-card" onclick="fillSearch('iPhone 16')">
+                <div class="ai-card-icon">📱</div>
+                <div class="ai-card-name">iPhone 16</div>
+              </div>
+              <div class="ai-card" onclick="fillSearch('Điện thoại bàn')">
+                <div class="ai-card-icon">☎️</div>
+                <div class="ai-card-name">ĐT bàn</div>
+              </div>
+              <div class="ai-card" onclick="fillSearch('Nokia 4G')">
+                <div class="ai-card-icon">📞</div>
+                <div class="ai-card-name">Nokia 4G</div>
+              </div>
+              <div class="ai-card" onclick="fillSearch('Manga Monster')">
+                <div class="ai-card-icon">📚</div>
+                <div class="ai-card-name">Manga</div>
+              </div>
+              <div class="ai-card" onclick="fillSearch('Tai nghe')">
+                <div class="ai-card-icon">🎧</div>
+                <div class="ai-card-name">Tai nghe</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search results (shown when user types) -->
+        <div class="search-results" id="search-results">
+          <div class="ai-section">
+            <div class="ai-label">🤖 Gợi ý liên quan</div>
+            <div class="ai-cards" id="ai-suggest-cards"></div>
+          </div>
+          <div id="result-list"></div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /search-overlay -->
+
+
+    <!-- ══════════ PRODUCT DETAIL PAGE ══════════ -->
+    <div class="page" id="page-detail">
+
+      <div class="detail-header">
+        <button class="detail-back" onclick="goPage('home')">←</button>
+        <span class="detail-header-title" id="detail-header-title">Chi tiết sản phẩm</span>
+        <div class="icon-btn" onclick="goPage('cart')" style="color:var(--text-primary);">
+          🛒<div class="badge cart-badge" style="border-color:white;">0</div>
+        </div>
+      </div>
+
+      <div class="scroll-area">
+        <div class="detail-img-box" id="detail-img-box">📱</div>
+
+        <div class="detail-info">
+          <div class="detail-name" id="detail-name">Tên sản phẩm</div>
+          <div class="detail-price-row">
+            <div class="detail-price" id="detail-price">0đ</div>
+            <span class="detail-old" id="detail-old">0đ</span>
+            <span class="detail-disc" id="detail-disc">-0%</span>
+          </div>
+          <div class="detail-rating-row">
+            <span class="stars">★★★★★</span>
+            <span id="detail-rating-count">(0 đánh giá)</span>
+          </div>
+          <!-- Predicted rating note -->
+          <div id="detail-predicted" style="
+            display:none;
+            margin-top:10px;
+            background:#fff8e1;
+            border:1px solid #ffcc80;
+            border-radius:8px;
+            padding:9px 12px;
+            font-size:11px;
+            color:#e65100;
+            font-weight:600;
+          "></div>
+          <div class="detail-perks">
+            <div class="detail-perks-title">✅ Đặc quyền Tiki</div>
+            <div class="detail-perks-list">
+              🚚 Giao hàng nhanh 2 giờ<br/>
+              🔄 Đổi trả 30 ngày<br/>
+              🛡️ Hàng chính hãng 100%
+            </div>
+          </div>
+        </div>
+
+        <!-- Similar products -->
+        <div class="suggest-block">
+          <div class="suggest-block-title">🤖 Sản phẩm tương tự</div>
+          <div class="products-row" id="similar-row"></div>
+        </div>
+
+        <!-- Bundle -->
+        <div class="suggest-block">
+          <div class="suggest-block-title">📦 Thường mua cùng nhau</div>
+          <div class="products-row" id="bundle-row"></div>
+        </div>
+
+        <div style="height:20px;"></div>
+      </div>
+
+      <div class="add-cart-bar">
+        <button class="btn-wish" onclick="addToWishlist()">❤️ Thích</button>
+        <button class="btn-add" onclick="addToCart()">🛒 Thêm vào giỏ</button>
+        <button class="btn-buy" onclick="addToCart()">Mua ngay</button>
+      </div>
+    </div>
+    <!-- /page-detail -->
+
+
+    <!-- ══════════ CART PAGE ══════════ -->
+    <div class="page" id="page-cart">
+
+      <div class="detail-header">
+        <button class="detail-back" onclick="goPage('home')">←</button>
+        <span class="detail-header-title">Giỏ hàng của tôi</span>
+      </div>
+
+      <div class="scroll-area" style="padding:10px;">
+        <div id="cart-empty" class="cart-empty-state">
+          <div class="cart-empty-icon">🛒</div>
+          <div class="cart-empty-text">Giỏ hàng đang trống</div>
+          <button class="cart-empty-btn" onclick="goPage('home')">Mua sắm ngay</button>
+        </div>
+        <div id="cart-list"></div>
+      </div>
+
+      <div class="checkout-bar" id="checkout-bar">
+        <div class="checkout-total-row">
+          <span class="checkout-total-label">Tổng cộng:</span>
+          <span class="checkout-total-val" id="cart-total">0đ</span>
+        </div>
+        <button class="checkout-btn" onclick="placeOrder()">Đặt hàng ngay 🎉</button>
+      </div>
+
+      <div class="bottom-nav">
+        <div class="bnav-item" onclick="goPage('home')">
+          <div class="bnav-icon">🏠</div>
+          <div class="bnav-label">Trang chủ</div>
+        </div>
+        <div class="bnav-item" onclick="openSearch()">
+          <div class="bnav-icon">🔍</div>
+          <div class="bnav-label">Tìm kiếm</div>
+        </div>
+        <div class="bnav-item active" onclick="goPage('cart')">
+          <div class="bnav-icon">🛒</div>
+          <div class="bnav-label">Giỏ hàng</div>
+        </div>
+        <div class="bnav-item">
+          <div class="bnav-icon">❤️</div>
+          <div class="bnav-label">Yêu thích</div>
+        </div>
+        <div class="bnav-item">
+          <div class="bnav-icon">👤</div>
+          <div class="bnav-label">Tài khoản</div>
+        </div>
+      </div>
+    </div>
+    <!-- /page-cart -->
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+  </div><!-- /screen -->
+</div><!-- /phone-frame -->
+
+<script src="app.js"></script>
+</body>
+</html>
